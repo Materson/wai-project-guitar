@@ -1,3 +1,19 @@
+<?php
+	$uri = $_SERVER["REQUEST_URI"];
+	if($uri==="/") $uri .="index";
+	$uri = "includes$uri";
+
+	if(file_exists($uri.".html") || file_exists($uri.".php"))
+	{
+		$load = $uri;
+	}
+	else
+	{
+		echo "Error 404 file not found";
+		//header();
+	}
+
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,7 +27,7 @@
 	<body>
 		<div id="container">
 			<header>
-				<a href="index.php"><span>Struna za struną</span></a>
+				<a href="index"><span>Struna za struną</span></a>
 			</header>
 
 			<nav>
@@ -21,19 +37,7 @@
 			<section>
 
 				<?php
-					$uri = $_SERVER["REQUEST_URI"];
-					if($uri==="/") $uri .="index";
-					$uri = "includes$uri";
-
-					if(file_exists($uri.".html") || file_exists($uri.".php"))
-					{
-						@include_once("$uri".".html");
-						@include_once("$uri".".php");
-					}
-					else
-					{
-						echo "Error 404 file not found";
-					}
+					include_once("$load.html");
 				?>
 				
 			</section>
