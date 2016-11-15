@@ -1,1 +1,41 @@
-galeria
+<div id="links" class="links">
+    <a href="images/guitar1.bmp" title="Gitara elektryczna">
+        <img src="images/guitar1.bmp" alt="Gitara elektryczna"/>
+    </a>
+    <a href="images/guitar2.bmp" title="Gitara akustyczna">
+        <img src="images/guitar2.bmp" alt="Gitara akustyczna">
+    </a>
+    <a href="images/guitar3.bmp" title="Guitar art">
+        <img src="images/guitar3.bmp" alt="Guitar art">
+    </a>
+    <a href="images/guitar4.bmp" title="Gitary mają najróżniejsze wyglądy">
+        <img src="images/guitar4.bmp" alt="Gitary mają najróżniejsze wyglądy">
+    </a>
+    <a href="images/guitar5.bmp" title="Kostka gitarowa">
+        <img src="images/guitar5.bmp" alt="Kostka gitarowa">
+    </a>
+</div>
+
+<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+
+<script src="/js/blueimp-gallery.min.js"></script>
+<script>
+document.getElementById('links').onclick = function (event) {
+    event = event || window.event;
+    var target = event.target || event.srcElement,
+        link = target.src ? target.parentNode : target,
+        options = {index: link, event: event},
+        links = this.getElementsByTagName('a');
+    blueimp.Gallery(links, options);
+};
+</script>
+
+		
