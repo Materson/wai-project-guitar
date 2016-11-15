@@ -22,6 +22,8 @@
 		<!-- <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/> -->
 		<meta name="author" content="Mateusz Szymanowski"/>
 		<link rel="stylesheet" type="text/css" href="/style.css"/>
+		<script type="text/javascript" src="/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="js.js"></script>
 	</head>
 
 	<body>
@@ -31,7 +33,7 @@
 			</header>
 
 			<nav>
-				<?php include_once("includes/menu.html");?>
+				<?php include_once("includes/nav.html");?>
 			</nav>
 
 			<section>
@@ -42,8 +44,11 @@
 				
 			</section>
 		</div>
+
 		<footer>
-			Strona przygotowana na potrzeby projektu z WAI oraz HiHu &copy; Mateusz Szymanowski
+			<?php
+				include_once("includes/footer.html");
+			?>
 		</footer>
 	</body>
 </html>
