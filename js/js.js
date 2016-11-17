@@ -12,6 +12,11 @@ window.onload = function()
 	{
 		a[i].addEventListener("click",addActiveLink);
 	}
+
+	$("table").click(function()
+	{
+		$(this).effect("explode", "linear", 1500);
+	});
 }
 
 function addActiveLink()
@@ -102,5 +107,8 @@ function addNewP()
 
 	paragraphs.appendChild(li);
 	article.appendChild(p);
+
+	$("#ak"+(p_number+1)).effect("pulsate", "linear",1300);
+	$("a[href='#ak"+(p_number+1)+"']").effect("pulsate", "linear",1300);
 
 }

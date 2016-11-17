@@ -13,8 +13,8 @@
 	}
 
 ?>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html  lang="pl">
 	<head>
 		<title>Struna za struną</title>
 		<meta charset="utf-8"/>
@@ -24,6 +24,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="/js/js.js"></script>
 	</head>
 
