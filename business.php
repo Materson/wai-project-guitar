@@ -15,6 +15,13 @@ function get_db()
     return $db;
 }
 
+function get_login($login)
+{
+    $db = get_db();
+    $login = $db->users->findOne(['login' => $login]);
+    return $login;
+}
+
 function get_products()
 {
     $db = get_db();

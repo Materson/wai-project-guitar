@@ -201,6 +201,22 @@ body
 		display: block;
 	}
 
+	.login_bar
+	{
+		background: #aaa;
+		padding: 5px;
+	}
+
+	.register
+	{
+		display: none;
+	}
+
+	.error
+	{
+		border: 2px solid #a00;
+	}
+
 	section
 	{
 		border-top: 2px solid #000;

@@ -41,6 +41,40 @@ function kontakt(&$model)
     return "kontakt_view";
 }
 
+function login(&$model)
+{
+    $path = $_SERVER["HTTP_REFERER"];
+    $filename = substr(strrchr($path, "/"), 1);
+
+    if(isset($_POST['login']))
+    {
+        $_SESSION['login'] = $_POST['login'];
+    }
+
+    return "redirect:$filename";
+}
+
+function register(&$model)
+{
+    $path = $_SERVER["HTTP_REFERER"];
+    $filename = substr(strrchr($path, "/"), 1);
+
+    if(isset($_POST['login']))
+    {
+        $_SESSION['login'] = $_POST['login'];
+
+        if(get_login($_SESSION['login']) != null)
+        {
+            $_SESSION['login_false'] = true;
+        }
+        else
+        {
+
+        }
+    }
+    return "redirect:$filename";
+}
+
 function products(&$model)
 {
     $products = get_products();

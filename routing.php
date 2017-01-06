@@ -2,6 +2,7 @@
 
 $routing = [
     '/' => 'index',
+    '/index' => 'index',
     '/klasyczna' => 'klasyczna',
     '/akustyczna' => 'akustyczna',
     '/elektryczna' => 'elektryczna',
@@ -9,4 +10,6 @@ $routing = [
     '/galeria' => 'galeria',
     '/gitara_svg' => 'gitara_svg',
     '/kontakt' => 'kontakt',
+    '/login' => 'login',
+    '/register' => 'register',
 ];
