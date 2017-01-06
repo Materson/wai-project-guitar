@@ -65,11 +65,29 @@ function register(&$model)
 
         if(get_login($_SESSION['login']) != null)
         {
-            $_SESSION['login_false'] = true;
+            $_SESSION['login_error'] = true;
         }
         else
         {
+            $_SESSION['login_error'] = false;
+        }
+        
+        if($_POST['pass'] != $_POST['pass2'] || $_POST['pass'] == "")
+        {
+            $_SESSION['pass_error'] = true;
+        }
+        else
+        {
+            $_SESSION['pass_error'] = false;
+        }
 
+        $_SESSION['reg_success'] = false;
+        if(!($_SESSION['login_error'] || $_SESSION['pass_error']))  //no error
+        {
+            $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+            save_user($_POST['login'], $pass);
+            session_unset();
+            $_SESSION['reg_success'] = true;
         }
     }
     return "redirect:$filename";

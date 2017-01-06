@@ -20,7 +20,7 @@
             </header>
 
             <nav>
-                <?php @include_once("fragments/nav.html");?>
+                <?php @include_once("fragments/nav.php");?>
             </nav>
 
             <section>

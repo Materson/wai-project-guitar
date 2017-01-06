@@ -22,6 +22,12 @@ function get_login($login)
     return $login;
 }
 
+function save_user($login, $pass)
+{
+    $db = get_db();
+    $db->users->insert(["login"=>$login, "pass"=>$pass]);
+}
+
 function get_products()
 {
     $db = get_db();
