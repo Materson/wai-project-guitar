@@ -212,9 +212,15 @@ body
 		display: none;
 	}
 
+	.logout
+	{
+		display: inline;
+	}
+
 	.error
 	{
 		border: 2px solid #a00;
+		color: #a00;
 	}
 
 	.success

@@ -25,7 +25,31 @@ function get_login($login)
 function save_user($login, $pass)
 {
     $db = get_db();
+    $pass = password_hash($pass, PASSWORD_DEFAULT);
     $db->users->insert(["login"=>$login, "pass"=>$pass]);
+}
+
+function get_user($login, $pass)
+{
+    $db = get_db();
+    $user = $db->users->findOne(["login"=>$login]);
+    if($user !== null && password_verify($pass, $user["pass"]))
+        return $user;
+    else
+        return false;
+}
+
+function save_img($name)
+{
+    $db = get_db();
+    $db->images->insert(["name" => $name]);
+}
+
+function get_imgs()
+{
+    $db = get_db();
+    $imgs = $db->images->find();
+    return $imgs;
 }
 
 function get_products()

@@ -6,10 +6,10 @@ $routing = [
     '/klasyczna' => 'klasyczna',
     '/akustyczna' => 'akustyczna',
     '/elektryczna' => 'elektryczna',
-    '/interwaly' => 'interwaly',
     '/galeria' => 'galeria',
-    '/gitara_svg' => 'gitara_svg',
-    '/kontakt' => 'kontakt',
     '/login' => 'login',
     '/register' => 'register',
+    '/logout' => 'logout',
+    '/dodaj_zdjecie' => 'dodaj_zdjecie',
+    '/upload_img' => 'upload_img',
 ];

@@ -1,5 +1,6 @@
 <?php
 require_once 'business.php';
+require_once 'functions.php';
 
 function index(&$model)
 {
@@ -26,44 +27,41 @@ function interwaly(&$model)
     return "interwaly_view";
 }
 
-function galeria(&$model)
+function dodaj_zdjecie(&$model)
 {
-    return "galeria_view";
-}
-
-function gitara_svg(&$model)
-{
-    return "gitara_svg_view";
-}
-
-function kontakt(&$model)
-{
-    return "kontakt_view";
+    return "dodaj_zdjecie_view";
 }
 
 function login(&$model)
 {
-    $path = $_SERVER["HTTP_REFERER"];
-    $filename = substr(strrchr($path, "/"), 1);
+    $prev_site = prev_site();
 
     if(isset($_POST['login']))
     {
-        $_SESSION['login'] = $_POST['login'];
+        if(isset($_SESSION['reg_success']))
+        {
+            unset($_SESSION['reg_success']);
+        }
+        $_SESSION['log_error'] = true;
+        if($user = get_user($_POST['login'], $_POST["pass"]))
+        {
+            session_regenerate_id();
+            $_SESSION['user_id'] = $user['_id'];
+            $_SESSION['name'] = $user['login'];
+        }
     }
 
-    return "redirect:$filename";
+    return "redirect:$prev_site";
 }
 
 function register(&$model)
 {
-    $path = $_SERVER["HTTP_REFERER"];
-    $filename = substr(strrchr($path, "/"), 1);
+    $prev_site = prev_site();
 
     if(isset($_POST['login']))
     {
-        $_SESSION['login'] = $_POST['login'];
-
-        if(get_login($_SESSION['login']) != null)
+        session_unset();
+        if(get_login($_POST['login']) != null)
         {
             $_SESSION['login_error'] = true;
         }
@@ -84,13 +82,57 @@ function register(&$model)
         $_SESSION['reg_success'] = false;
         if(!($_SESSION['login_error'] || $_SESSION['pass_error']))  //no error
         {
-            $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-            save_user($_POST['login'], $pass);
-            session_unset();
+            save_user($_POST['login'], $_POST['pass']);
             $_SESSION['reg_success'] = true;
         }
     }
-    return "redirect:$filename";
+
+    return "redirect:$prev_site";
+}
+
+function logout(&$model)
+{
+    $prev_site = prev_site();
+    session_destroy();
+
+    return "redirect:$prev_site";
+}
+
+function upload_img(&$model)
+{
+    $prev_site = prev_site();
+    $file = $_FILES['file'];
+    $tmp = $file['tmp_name'];
+
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime_type = finfo_file($finfo, $tmp);
+    if($mime_type !== "image/jpeg" && $mime_type && "image/png" && $mime_type !== "image/jpg")
+    {
+        //inny format
+        return "redirect:$prev_site";
+    }
+
+    $dir = "/var/www/dev/web/web/images/";
+    $filename = basename($file['name']);
+    $target = $dir.$filename;
+    if(move_uploaded_file($tmp, $target))
+    {
+        save_img($filename);
+    }
+    else
+    {
+        //blad
+    }
+
+    return "redirect:$prev_site";
+}
+
+function galeria(&$model)
+{
+    $imgs = get_imgs();
+    $model['imgs'] = $imgs;
+
+    return "galeria_view";
 }
 
 function products(&$model)

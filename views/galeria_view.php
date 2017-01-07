@@ -25,22 +25,12 @@
 
             <section>
                 <div id="links" class="links">
-                <a href="static/images/guitar1.bmp" title="Gitara elektryczna">
-                    <img src="static/images/guitar1.bmp" alt="Gitara elektryczna"/>
-                </a>
-                <a href="static/images/guitar2.bmp" title="Gitara akustyczna">
-                    <img src="static/images/guitar2.bmp" alt="Gitara akustyczna">
-                </a>
-                <a href="static/images/guitar3.bmp" title="Guitar art">
-                    <img src="static/images/guitar3.bmp" alt="Guitar art">
-                </a>
-                <a href="static/images/guitar4.bmp" title="Gitary mają najróżniejsze wyglądy">
-                    <img src="static/images/guitar4.bmp" alt="Gitary mają najróżniejsze wyglądy">
-                </a>
-                <a href="static/images/guitar5.bmp" title="Kostka gitarowa">
-                    <img src="static/images/guitar5.bmp" alt="Kostka gitarowa">
-                </a>
-            </div>
+                <?php foreach($imgs as $img): ?>
+                    <a href="images/<?= $img['name'] ?>" alt="<?= $img['name'] ?>" title="<?= $img['name'] ?>" alt="<?= $img['name'] ?>">
+                        <img src="images/<?= $img['name'] ?>" alt="<?= $img['name'] ?>"/>
+                    </a>
+                <?php endforeach; ?>
+                </div>
 
             <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
                 <div class="slides"></div>
