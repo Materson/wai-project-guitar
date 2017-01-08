@@ -7,8 +7,9 @@
 			<li><a href="elektryczna">Elektryczna</a></li>
 		</ul>
 	</li>
-	<li><a href="galeria">Galeria</a></li>
 	<li><a href="dodaj_zdjecie">Dodaj zdjęcie</a></li>
+	<li><a href="galeria">Galeria</a></li>
+	<li><a href="ulubione">Ulubione</a></li>
 </ul>
 
 <?php include("logowanie.php");

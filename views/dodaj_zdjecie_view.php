@@ -25,9 +25,51 @@
 				<h2>Dodaj zdjęcie</h2>
 
 				<form action="upload_img" method="POST" enctype="multipart/form-data">
-					Wybierz zdjecie: <input type="file" name="file"/><br/>
-					Znak wodny: <input type="text" name="watermark"/>
+					Wybierz zdjecie: <input type="file" name="file" required="required" /><br/>
+					Znak wodny: <input type="text" name="watermark" required="required" /><br/>
+					Autor: <input type="text" name="author" required="required"
+						<?php
+							if(isset($_SESSION['email_error'])) echo"class='input_error'";
+							if(isset($_SESSION['user_id'])) echo"value='$_SESSION[name]'";
+						?>/><br/>
+					Tytuł: <input type="text" name="title" required="required"
+						<?php
+							if(isset($_SESSION['title_error'])) echo"class='input_error'";
+						?>/><br/>
+					<?php if(isset($_SESSION['user_id'])): ?>
+						Dostęp:
+							<label><input type="radio" name="access" value="public" checked="checked">Publiczny</label>
+							<label><input type="radio" name="access" value="private">Prywatny</label><br/>
+					<?php endif; ?>
 					<input type="submit" value="Wyślij"/>
+
+					<?php if(isset($_SESSION['type_error'])): ?>
+						<div class="error">
+							Zły format pliku
+						</div>
+					<?php 
+						unset($_SESSION['type_error']);
+						endif;
+
+						if(isset($_SESSION['size_error'])):
+					?>
+						<div class="error">
+							Za duży rozmiar, maksymalny rozmiar to 1MB
+						</div>
+					<?php 
+						unset($_SESSION['size_error']);
+						endif;
+
+						if(isset($_SESSION['upload_success'])):
+					?>
+						<div class="success">
+							Pomyślnie załadowano zdjęcie
+						</div>
+					<?php 
+						unset($_SESSION['upload_success']);
+						endif;
+					?>
+
 
 				</form>
 			</section>

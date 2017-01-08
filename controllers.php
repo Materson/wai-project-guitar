@@ -43,7 +43,7 @@ function login(&$model)
             unset($_SESSION['reg_success']);
         }
         $_SESSION['log_error'] = true;
-        if($user = get_user($_POST['login'], $_POST["pass"]))
+        if($user = check_user($_POST['login'], $_POST["pass"]))
         {
             session_regenerate_id();
             $_SESSION['user_id'] = $user['_id'];
@@ -61,7 +61,9 @@ function register(&$model)
     if(isset($_POST['login']))
     {
         session_unset();
-        if(get_login($_POST['login']) != null)
+        $_SESSION['login_reg'] = $_POST['login'];
+        $_SESSION['email'] = $_POST['email'];
+        if(get_login($_POST['login']) != null || $_POST['login'] == "")
         {
             $_SESSION['login_error'] = true;
         }
@@ -79,10 +81,19 @@ function register(&$model)
             $_SESSION['pass_error'] = false;
         }
 
-        $_SESSION['reg_success'] = false;
-        if(!($_SESSION['login_error'] || $_SESSION['pass_error']))  //no error
+        if($_POST['email'] == "")
         {
-            save_user($_POST['login'], $_POST['pass']);
+            $_SESSION['email_error'] = true;
+        }
+        else
+        {
+            $_SESSION['email_error'] = false;
+        }
+
+        $_SESSION['reg_success'] = false;
+        if(!($_SESSION['login_error'] || $_SESSION['pass_error'] || $_SESSION['email_error']))  //no errors
+        {
+            save_user($_POST['login'], $_POST['pass'], $_POST['email']);
             $_SESSION['reg_success'] = true;
         }
     }
@@ -104,20 +115,51 @@ function upload_img(&$model)
     $file = $_FILES['file'];
     $tmp = $file['tmp_name'];
 
+    if($file['size'] > 8388608 || $file['size'] == "")
+    {
+        $_SESSION["size_error"] = true;
+        return "redirect:$prev_site";
+    }
+
+    if($_POST['author'] == "")
+    {
+        $_SESSION["author_error"] = true;
+        return "redirect:$prev_site";
+    }
+    $author = $_POST['author'];
+
+    if($_POST['title'] == "")
+    {
+        $_SESSION["title_error"] = true;
+        return "redirect:$prev_site";
+    }
+    $title = $_POST['title'];
+
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mime_type = finfo_file($finfo, $tmp);
     if($mime_type !== "image/jpeg" && $mime_type && "image/png" && $mime_type !== "image/jpg")
     {
-        //inny format
+        $_SESSION["type_error"] = true;
         return "redirect:$prev_site";
     }
 
     $dir = "/var/www/dev/web/web/images/";
     $filename = basename($file['name']);
-    $target = $dir.$filename;
+    $extension = substr(strrchr($filename, "."), 1);
+    $target = $dir.$title.".$extension";
+    if(isset($_POST['access']))
+    {
+        $access = $_POST['access'];
+    }
+    else
+    {
+        $access = "public";
+    }
+
     if(move_uploaded_file($tmp, $target))
     {
-        save_img($filename);
+        save_img($title.".$extension", $access, $author, $title);
+        $_SESSION['upload_success'] = true;
     }
     else
     {
@@ -133,6 +175,12 @@ function galeria(&$model)
     $model['imgs'] = $imgs;
 
     return "galeria_view";
+}
+
+function ulubione(&$model)
+{
+
+    return "ulubione_view";
 }
 
 function products(&$model)

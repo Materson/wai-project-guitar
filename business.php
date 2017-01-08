@@ -22,27 +22,34 @@ function get_login($login)
     return $login;
 }
 
-function save_user($login, $pass)
+function save_user($login, $pass, $email)
 {
     $db = get_db();
     $pass = password_hash($pass, PASSWORD_DEFAULT);
-    $db->users->insert(["login"=>$login, "pass"=>$pass]);
+    $db->users->insert([
+        "login" => $login,
+        "pass" => $pass,
+        "email" => $email]);
 }
 
-function get_user($login, $pass)
+function check_user($login, $pass)
 {
     $db = get_db();
-    $user = $db->users->findOne(["login"=>$login]);
+    $user = $db->users->findOne(["login" => $login]);
     if($user !== null && password_verify($pass, $user["pass"]))
         return $user;
     else
         return false;
 }
 
-function save_img($name)
+function save_img($name, $access, $author, $title)
 {
     $db = get_db();
-    $db->images->insert(["name" => $name]);
+    $db->images->insert([
+        "name" => $name,
+        "access" => $access,
+        "author" => $author,
+        "title" => $title]);
 }
 
 function get_imgs()
@@ -52,40 +59,9 @@ function get_imgs()
     return $imgs;
 }
 
-function get_products()
+function get_img($id)
 {
     $db = get_db();
-    return $db->products->find();
-}
-
-function get_products_by_category($cat)
-{
-    $db = get_db();
-    $products = $db->products->find(['cat' => $cat]);
-    return $products;
-}
-
-function get_product($id)
-{
-    $db = get_db();
-    return $db->products->findOne(['_id' => new MongoId($id)]);
-}
-
-function save_product($id, $product)
-{
-    $db = get_db();
-
-    if ($id == null) {
-        $db->products->insert($product);
-    } else {
-        $db->products->update(['_id' => new MongoId($id)], $product);
-    }
-
-    return true;
-}
-
-function delete_product($id)
-{
-    $db = get_db();
-    $db->products->remove(['_id' => new MongoId($id)]);
+    $img = $db->images->findOne(["_id" => new MongoId($id)]);
+    return $img;
 }

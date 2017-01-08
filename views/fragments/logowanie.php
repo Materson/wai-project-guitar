@@ -14,11 +14,19 @@
 
 
 	<form class="register" action="register" method="POST">
-		Login: <input type="text" name="login" value="<?= $_SESSION[login_reg] ?>"
-			<?php if($_SESSION['login_error']) echo"class='error'"; ?> />
-		Hasło: <input type="password" name="pass"/>
-		Powtórz hasło: <input type="password" name="pass2"
-			<?php if($_SESSION['pass_error']) echo"class='error'"; ?>/>
+		E-mail: <input type="email" name="email" required="required"
+			<?php 
+				if(!$_SESSION['reg_success']) echo "value='$_SESSION[email]'";
+				if($_SESSION['email_error']) echo"class='input_error'"; 
+			?> />
+		Login: <input type="text" name="login" required="required"
+			<?php 
+				if(!$_SESSION['reg_success']) echo "value='$_SESSION[login]'";
+				if($_SESSION['login_error']) echo"class='input_error'"; 
+			?> />
+		Hasło: <input type="password" name="pass" required="required"/>
+		Powtórz hasło: <input type="password" name="pass2" required="required"
+			<?php if($_SESSION['pass_error']) echo"class='input_error'"; ?>/>
 		<input type="submit" name="submit" value="Zarejestruj się"/>
 		<?php if($_SESSION['reg_success']): ?>
 			<span class="success">Użytkownik utworzony</span>
@@ -45,7 +53,7 @@
 	<?php endif; 
 		if($_SESSION['reg_success'])
 		{
-			unset($_SESSION['reg_success']);
+			session_unset();
 		}
 	?>
 </script>

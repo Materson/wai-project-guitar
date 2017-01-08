@@ -26,7 +26,7 @@
             <section>
                 <div id="links" class="links">
                 <?php foreach($imgs as $img): ?>
-                    <div class="img">  
+                    <div id="img">  
                         <a href="images/<?= $img['name'] ?>" title="<?= $img['title'] ?>">
                             <img src="images/<?= $img['name'] ?>" alt="<?= $img['title'] ?>"><br/>
                             Autor: <?= $img['author'] ?><br/>
@@ -50,7 +50,7 @@
 
             <script src="static/js/blueimp-gallery.min.js"></script>
             <script>
-            document.getElementById('links').onclick = function (event) {
+            document.getElementById('img').onclick = function (event) {
                 event = event || window.event;
                 var target = event.target || event.srcElement,
                     link = target.src ? target.parentNode : target,

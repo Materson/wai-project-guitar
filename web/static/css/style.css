@@ -219,8 +219,12 @@ body
 
 	.error
 	{
-		border: 2px solid #a00;
 		color: #a00;
+	}
+
+	.input_error
+	{
+		border: 2px solid #a00;
 	}
 
 	.success
@@ -266,9 +270,19 @@ body
 		margin: 20px;
 	}
 
-	#links
+	#links #img
+	{
+		float: left;
+		
+	}
+
+	#links a
 	{
 		text-align: center;
+		color: #000;
+		text-decoration: none;
+		margin: 5px;
+		display: inline;
 	}
 
 	#links img
