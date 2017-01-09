@@ -42,20 +42,32 @@ function check_user($login, $pass)
         return false;
 }
 
-function save_img($name, $access, $author, $title)
+function save_img($name, $extension, $access, $author, $title, $owner)
 {
     $db = get_db();
     $db->images->insert([
         "name" => $name,
+        "extension" => $extension,
         "access" => $access,
         "author" => $author,
-        "title" => $title]);
+        "title" => $title,
+        "owner" => $owner]);
 }
 
-function get_imgs()
+function get_imgs($owner=null)
 {
     $db = get_db();
-    $imgs = $db->images->find();
+    if($owner == null)
+    {
+        $imgs = $db->images->find(["access" => "public"]);
+    }
+    else
+    {
+        $imgs = $db->images->find([
+            '$or' => [
+                ["access" => "public"],
+                ["owner" => $owner]]]);
+    }
     return $imgs;
 }
 
@@ -64,4 +76,11 @@ function get_img($id)
     $db = get_db();
     $img = $db->images->findOne(["_id" => new MongoId($id)]);
     return $img;
+}
+
+function get_favorite($array)
+{
+    $db = get_db();
+    $imgs = $db->images->find(["_id" => ['$in' => $array]]);
+    return $imgs;
 }

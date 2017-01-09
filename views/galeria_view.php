@@ -24,41 +24,26 @@
             </nav>
 
             <section>
-                <div id="links" class="links">
                 <?php foreach($imgs as $img): ?>
                     <div class="img">  
-                        <a href="images/<?= $img['name'] ?>" title="<?= $img['title'] ?>">
-                            <img src="images/<?= $img['name'] ?>" alt="<?= $img['title'] ?>"><br/>
+                        <a href="images/<?= $img['title'].'_wm.'.$img['extension'] ?>" title="<?= $img['title'] ?>">
+                            <img src="images/<?= $img['title'].'_thumb.'.$img['extension'] ?>" alt="<?= $img['title'] ?>"><br/>
+                        </a>
+                            <?php if($img['access'] == 'private') echo "Prywatne<br/>"; ?>
                             Autor: <?= $img['author'] ?><br/>
                             Tytuł: <?= $img['title'] ?><br/>
-                        </a>
+                        <label> <input type="checkbox" form="favorite" name="favorite[]" value="<?= $img['_id'] ?>"
+                        <?php 
+                            if(isset($_SESSION['favorite']) && in_array($img["_id"], $_SESSION['favorite'])):?> checked="checked" 
+                        <?php endif; ?>/> Ulubione </label>
                     </div>
-                        <label> <input type="checkbox" name="favorite[]" value="<?= $img['_id'] ?>"/> Ulubione </label>
+                    
                 <?php endforeach; ?>
-                </div>
                 <div style="clear: both;"></div>
+                <form id="favorite" action="save_favorite" method="POST">
+                    <input type="submit" value="Zapamiętaj wybrane"/>                    
+                </form>
 
-            <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-                <div class="slides"></div>
-                <h3 class="title"></h3>
-                <a class="prev">‹</a>
-                <a class="next">›</a>
-                <a class="close">×</a>
-                <a class="play-pause"></a>
-                <ol class="indicator"></ol>
-            </div>
-
-            <script src="static/js/blueimp-gallery.min.js"></script>
-            <script>
-            document.getElementById('links').onclick = function (event) {
-                event = event || window.event;
-                var target = event.target || event.srcElement,
-                    link = target.src ? target.parentNode : target,
-                    options = {index: link, event: event},
-                    links = this.getElementsByTagName('a');
-                blueimp.Gallery(links, options);
-            };
-            </script>  
             </section>
         </div>
 

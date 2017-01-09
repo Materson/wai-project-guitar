@@ -12,4 +12,7 @@ $routing = [
     '/logout' => 'logout',
     '/dodaj_zdjecie' => 'dodaj_zdjecie',
     '/upload_img' => 'upload_img',
+    '/ulubione' => 'ulubione',
+    '/save_favorite' => 'save_favorite',
+    '/del_favorite' => 'del_favorite',
 ];

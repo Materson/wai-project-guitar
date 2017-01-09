@@ -60,6 +60,15 @@
 						unset($_SESSION['size_error']);
 						endif;
 
+						if(isset($_SESSION['upload_error'])):
+					?>
+						<div class="error">
+							Błąd podczas przesyłania pliku
+						</div>
+					<?php 
+						unset($_SESSION['upload_error']);
+						endif;
+
 						if(isset($_SESSION['upload_success'])):
 					?>
 						<div class="success">
